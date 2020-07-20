@@ -1,5 +1,6 @@
 import requests
 import json
+import matplotlib.pyplot as plt
 from db import db, db_session, Valutes
 
 # ---PURE SECTION---
@@ -27,8 +28,7 @@ except Exception as err:
 dollar, euro, yuan, jpy = [response['Valute'][key]
                            for key in char_codes]
 
-# не понимаю зачем нужно делить йены на 100, 
-# но без этого формула ломается
+# делим, потому что номил 100, а не 1
 jpy['Previous'] = jpy['Previous'] / 100
 
 
@@ -47,8 +47,28 @@ try:
             to_cny=exchange_valute(val['Previous'],yuan['Previous']),
             to_jpy=exchange_valute(val['Previous'],jpy['Previous'])
         ) for val in [dollar, euro, yuan, jpy]]
-
+        
 # empty >except because 
 # if we try to copy unique values - we get an error
 except:
     pass
+
+# ---DATA VISUALIZATION SECTION---
+# пришлось скопировать данные, чтобы не лезть лишний раз в дб 
+# и не разбивать ответ на разные переменные
+vdollar, veuro, vyuan, vjpy = [{
+    'to_usd': exchange_valute(val['Previous'],dollar['Previous']),
+    'to_eur': exchange_valute(val['Previous'],euro['Previous']),
+    'to_cny': exchange_valute(val['Previous'],yuan['Previous']),
+    'to_jpy': exchange_valute(val['Previous'],jpy['Previous']) }
+    for val in [dollar, euro, yuan, jpy]]
+
+names = [x['Name'] for x in [dollar, euro, yuan, jpy]]
+print(vdollar, veuro, vyuan, vjpy)
+# я вообще не понимаю как делать графики
+plt.plot(vdollar.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]])
+plt.plot(veuro.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'g')
+plt.plot(vyuan.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'r')
+plt.plot(vjpy.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'm')
+plt.show()
+
