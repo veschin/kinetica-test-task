@@ -41,12 +41,13 @@ try:
     with db_session:
         [Valutes(
             char_code=val['CharCode'],
+            name=val['Name'],
             to_usd=exchange_valute(val['Previous'],dollar['Previous']),
             to_eur=exchange_valute(val['Previous'],euro['Previous']),
             to_cny=exchange_valute(val['Previous'],yuan['Previous']),
             to_jpy=exchange_valute(val['Previous'],jpy['Previous'])
         ) for val in [dollar, euro, yuan, jpy]]
-        
+
 # empty >except because 
 # if we try to copy unique values - we get an error
 except:
