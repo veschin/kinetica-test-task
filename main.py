@@ -64,11 +64,11 @@ vdollar, veuro, vyuan, vjpy = [{
     for val in [dollar, euro, yuan, jpy]]
 
 names = [x['Name'] for x in [dollar, euro, yuan, jpy]]
-print(vdollar, veuro, vyuan, vjpy)
+
 # я вообще не понимаю как делать графики
-plt.plot(vdollar.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]])
-plt.plot(veuro.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'g')
-plt.plot(vyuan.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'r')
-plt.plot(vjpy.values(), [val['Previous'] for val in [dollar, euro, yuan, jpy]], 'm')
+plt.plot(vdollar.values(), names)
+plt.plot(veuro.values(), names, 'g')
+plt.plot(vyuan.values(), names, 'r')
+plt.plot(vjpy.values(), names, 'm')
 plt.show()
 
