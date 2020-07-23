@@ -6,8 +6,8 @@ set_sql_debug(True)
 
 class Valutes(db.Entity):
     id = PrimaryKey(int, auto=True)
-    char_code = Required(str,unique=True)
-    name = Required(str)
+    char_code = Required(str)
+    date = Required(str)
     to_usd = Optional(float)
     to_eur = Optional(float)
     to_cny = Optional(float)
