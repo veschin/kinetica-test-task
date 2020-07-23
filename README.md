@@ -34,34 +34,35 @@
 
 ### Если кто-то решит использовать скрипт  
 #### Константы  
-  - url  
-  - days :int -> сколько дней, столько страниц парсит скрипт  
-  - char_codes :list -> [коды валют]  
+    url :str
+    days :int -> сколько дней, столько страниц парсит скрипт  
+    char_codes :list -> [коды валют]  
   
 #### Функции  
 Сигнатуры в коде перед функциями  
-  - get currency - получает через API центробанка json -> парсит его в мапу. Структура в коде.  
-  - exchange to - обмен валюты к списку -> возвращает курс от валюты к списку.  
-  - exchange list - сахар для обмена коллекций.  
-  - nominal to one - приведение номинала к единице.  
-    Было: 100 йен -> стало: 1, было: 10 юаней -> стало: 1    
-  - show сахар для matplotlib графиков. Строит графики из коллекций.    
+1. get currency - получает через API центробанка json -> парсит его в мапу. Структура в коде.  
+2. exchange to - обмен валюты к списку -> возвращает курс от валюты к списку.  
+3. exchange list - сахар для обмена коллекций.  
+4. nominal to one - приведение номинала к единице.  
+5. Было: 100 йен -> стало: 1, было: 10 юаней -> стало: 1    
+6. show - сахар для matplotlib графиков. Строит графики из коллекций.    
 
 #### Дб
-  - SQLite3
-  - Pony orm - будь аккуратнее, иногда лямбды боль, но работает она и правда быстро. 
-    Не лезь в select, оно тебя сожрет.
-  - Valutes(  
-    id = PrimaryKey(int, auto=True)  
-    char_code = Required(str)  
-    date = Required(str)  
-    to_usd = Optional(float)  
-    to_eur = Optional(float)  
-    to_cny = Optional(float)  
-    to_jpy = Optional(float))  
+SQLite3
+Pony orm - будь аккуратнее, иногда лямбды боль, но работает она и правда быстро. 
+Не лезь в select, оно тебя сожрет.  
+
+    Valutes(  
+      id = PrimaryKey(int, auto=True)  
+      char_code = Required(str)  
+      date = Required(str)  
+      to_usd = Optional(float)  
+      to_eur = Optional(float)  
+      to_cny = Optional(float)  
+      to_jpy = Optional(float))  
 
 #### API
-  - API центробанка имеет лимит  
+  + API центробанка имеет лимит  
     5 запросов в секунду  
     120 запросов в минуту  
     10000 запросов в сутки  
