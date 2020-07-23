@@ -2,6 +2,7 @@ import requests
 import matplotlib.pyplot as plt
 from db import db, db_session, Valutes
 
+
 # ---PURE SECTION---
 char_codes = ['USD', 'EUR', 'CNY', 'JPY']
 
@@ -15,6 +16,7 @@ days = 30
 # (float, list) -> list(float)
 exchange_to = lambda valute, valutes: \
                     [round((1 / v) / (1 / valute), 3) for v in valutes]
+
 # (map) -> list
 exchange_list = lambda valutes: \
                     [exchange_to(v, valutes) for v in valutes]
@@ -61,7 +63,6 @@ def get_currency(valutes, url, days):
 
 valutes = get_currency({}, url, days)
 
-
 # ---DB SECTION---
 # create tables
 db.generate_mapping(create_tables=True)
@@ -81,13 +82,16 @@ with db_session:
 # ---DATA VISUALIZATION SECTION---
 # get dates
 dates = [valute['date'][3:] for valute in valutes['EXCHANGE']]
+
 # before 20 19 18 17 -> after 7 18 19 20
 dates.reverse()
+
 # destructuring valute lists for variables -> 
 # vars x4 =[[float list] [float list] [float list] [float list]]
 usd, eur, cny, jpy = [[valute['value'] 
                         for valute in valutes[key]] 
                             for key in valutes if key != 'EXCHANGE']
+                            
 # sugar for call matplotlib func
 # ([float list], str, char) -> None
 def show(valute, label, color):
@@ -100,6 +104,3 @@ def show(valute, label, color):
                                 [usd, eur, cny, jpy], 
                                 char_codes, 
                                 ['b', 'r', 'g', 'y'])]                    
-
-
-
